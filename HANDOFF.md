@@ -18,7 +18,8 @@ Kalau ada yang bertentangan, ikuti dokumen di atas dan tanyakan dulu.
 | Hari 1 sampai 4 | Tes lulus | Migrasi, seeder, layout, Menu, keranjang, Checkout, Status Pesanan. `app/Exceptions/PesananGagal.php` sempat hilang dari repo dan dipulihkan dari zip hari 3. |
 | Hari 5: sisi pengelola | Digabung, tes lulus | Disalin dari `warung-hari5-pengelola.zip`. Satu tes di `AdminTest` diperbaiki (lihat Catatan). |
 | Hari 6: Cari Makan Sesuai Budget | Digabung, tes lulus | Disalin dari `warung-hari6-budget.zip`. `routes/web.php` hari 6 sudah memuat route hari 5, jadi dipakai apa adanya. `/budget` memakai `BudgetController`. |
-| Tes | Lulus | 23 November 2026, SQLite in-memory: 57 tes, 504 assertion, semua lulus. |
+| Tes | Lulus | 23 November 2026, SQLite in-memory: 63 tes, 522 assertion, semua lulus. |
+| Lupa kode pesanan | Ditambah, tes lulus | Di `/cek-pesanan`: nama + nomor kontak yang cocok menampilkan kode dan status pesanan 24 jam terakhir saja, tanpa rincian dan tanpa akses ke halaman status. Logika di `PencarianPesananService`. Versi terbatas dari FR-07, disetujui 23 November 2026. Tim masih perlu mengetahuinya. |
 | Database | Berhasil | `migrate:fresh --seed` ke MySQL: 12 menu, 3 aturan kombinasi, 1 pengaturan, 1 akun pengelola. |
 | Uji manual | Belum | Belum dicoba di browser, termasuk layar 360px. |
 

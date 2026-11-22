@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\StatusPesanan;
 use App\Models\Pesanan;
+use App\Services\PencarianPesananService;
 use App\Support\Format;
 use App\Support\Warung;
 use Illuminate\Http\Request;
@@ -38,6 +39,33 @@ class PesananController extends Controller
         $this->beriAkses($pesanan->kode_pesanan);
 
         return redirect()->route('pesanan.status', $pesanan->kode_pesanan);
+    }
+
+    /** Lupa kode: tampilkan kode dan status pesanan 24 jam terakhir bila nama dan nomor kontak cocok. */
+    public function lupaKode(Request $request, PencarianPesananService $pencarian)
+    {
+        $data = $request->validate([
+            'lupa_nama' => ['required', 'string', 'max:100'],
+            'lupa_kontak' => ['required', 'string', 'max:30'],
+        ], [
+            'lupa_nama.required' => 'Nama pemesan wajib diisi.',
+            'lupa_kontak.required' => 'Nomor kontak wajib diisi.',
+        ]);
+
+        $hasil = $pencarian->cariLewatKontakDanNama($data['lupa_kontak'], $data['lupa_nama']);
+        $kembali = redirect()->to(route('cek-pesanan').'#lupa-kode');
+
+        // Pesan umum: tidak memberi tahu bagian mana yang salah.
+        if ($hasil->isEmpty()) {
+            return $kembali
+                ->withInput($request->only('lupa_nama'))
+                ->with('galat_lupa', 'Tidak ada pesanan 24 jam terakhir yang cocok dengan nama dan nomor itu.');
+        }
+
+        return $kembali->with('hasil_lupa', $hasil->map(fn (Pesanan $pesanan): array => [
+            'kode' => $pesanan->kode_pesanan,
+            'status' => $pesanan->status->value,
+        ])->all());
     }
 
     public function tampil(string $kode)

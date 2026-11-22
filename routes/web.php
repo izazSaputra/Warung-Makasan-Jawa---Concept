@@ -28,6 +28,7 @@ Route::post('/checkout', [CheckoutController::class, 'kirim'])->name('checkout.k
 // Status pesanan (kode pesanan + nomor kontak, tanpa akun)
 Route::get('/cek-pesanan', [PesananController::class, 'formCek'])->name('cek-pesanan');
 Route::post('/cek-pesanan', [PesananController::class, 'cek'])->middleware('throttle:10,1')->name('cek-pesanan.proses');
+Route::post('/cek-pesanan/lupa-kode', [PesananController::class, 'lupaKode'])->middleware('throttle:10,1')->name('cek-pesanan.lupa-kode');
 Route::get('/pesanan/{kode}', [PesananController::class, 'tampil'])->name('pesanan.status');
 
 // Keranjang (sesi)
