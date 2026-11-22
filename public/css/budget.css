@@ -1,0 +1,28 @@
+/* Halaman Cari Makan Sesuai Budget. Memakai token dari warung.css. */
+.budget-form { max-width: 720px; margin-bottom: 32px; }
+.budget-form input[type="text"] {
+  width: 100%; min-height: 48px; padding: 10px 16px; border: 1px solid var(--outline); border-radius: var(--r-md);
+  font: 800 20px/28px var(--font); color: var(--on-surface); background: var(--surface);
+}
+.budget-form input[aria-invalid="true"] { border-color: var(--error); }
+.budget-form fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.pilihan-kolom { display: grid; gap: 8px; }
+.pilihan-baris { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.pilihan--tinggi { padding-top: 10px; padding-bottom: 10px; align-items: flex-start; }
+.pilihan--tinggi input { margin-top: 4px; }
+
+.hasil-bagian { margin-bottom: 32px; }
+.hasil-daftar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.hasil__atas { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.hasil__sisa { background: var(--ok-bg); color: var(--ok-teks); }
+.hasil__daftar { list-style: none; margin: 0; padding: 0; }
+.hasil__daftar li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--surface-variant); }
+.hasil__rumus { font-size: 14px; margin: 0; word-break: break-word; }
+.kosong .hasil__rumus { font-size: 16px; }
+
+@media (max-width: 900px) {
+  .hasil-daftar { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .pilihan-baris { grid-template-columns: 1fr; }
+}

@@ -19,5 +19,6 @@
             @error('kontak') <p class="galat-teks">{{ $message }}</p> @enderror
         </div>
         <button type="submit" class="btn btn--utama btn--besar">Cek Pesanan</button>
+        <p class="bantu">Lupa kode? Pesanan tetap bisa diambil. Sebutkan nama dan nomor kontak saat mengambil di warung.</p>
     </form>
 @endsection

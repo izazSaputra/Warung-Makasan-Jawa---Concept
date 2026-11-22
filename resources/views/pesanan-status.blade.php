@@ -31,6 +31,7 @@
             <div>
                 <div class="muted" style="font-size:14px;font-weight:600">Kode pesanan</div>
                 <div class="kode-besar">{{ $pesanan->kode_pesanan }}</div>
+                <p class="bantu">Simpan atau screenshot kode ini untuk cek status pesanan nanti.</p>
             </div>
 
             <div>
