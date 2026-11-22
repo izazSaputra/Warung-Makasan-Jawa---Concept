@@ -18,10 +18,11 @@ Kalau ada yang bertentangan, ikuti dokumen di atas dan tanyakan dulu.
 | Hari 1 sampai 4 | Tes lulus | Migrasi, seeder, layout, Menu, keranjang, Checkout, Status Pesanan. `app/Exceptions/PesananGagal.php` sempat hilang dari repo dan dipulihkan dari zip hari 3. |
 | Hari 5: sisi pengelola | Digabung, tes lulus | Disalin dari `warung-hari5-pengelola.zip`. Satu tes di `AdminTest` diperbaiki (lihat Catatan). |
 | Hari 6: Cari Makan Sesuai Budget | Digabung, tes lulus | Disalin dari `warung-hari6-budget.zip`. `routes/web.php` hari 6 sudah memuat route hari 5, jadi dipakai apa adanya. `/budget` memakai `BudgetController`. |
-| Tes | Lulus | 23 November 2026, SQLite in-memory: 63 tes, 522 assertion, semua lulus. |
+| Tes | Lulus | 23 November 2026, SQLite in-memory: 64 tes, 523 assertion, semua lulus. |
+| Zona waktu | Diperbaiki | `config/app.php` diubah dari `UTC` ke `Asia/Jakarta`. Sebelumnya jam yang tampil mundur 7 jam dan Ringkasan memotong hari pada 07.00 WIB. Dijaga oleh `AdminTest::test_ringkasan_memakai_tanggal_wib`. |
 | Lupa kode pesanan | Ditambah, tes lulus | Di `/cek-pesanan`: nama + nomor kontak yang cocok menampilkan kode dan status pesanan 24 jam terakhir saja, tanpa rincian dan tanpa akses ke halaman status. Logika di `PencarianPesananService`. Versi terbatas dari FR-07, disetujui 23 November 2026. Tim masih perlu mengetahuinya. |
 | Database | Berhasil | `migrate:fresh --seed` ke MySQL: 12 menu, 3 aturan kombinasi, 1 pengaturan, 1 akun pengelola. |
-| Uji manual | Belum | Belum dicoba di browser, termasuk layar 360px. |
+| Uji manual | Sebagian | Alur penuh (pesan sampai Selesai di admin) sudah dicoba di browser dan berjalan. Layar 360px dan ponsel belum dicoba. |
 
 Catatan perbaikan saat penggabungan (23 November 2026):
 - `DatabaseSeeder` masih bawaan Laravel, jadi `--seed` tidak menjalankan `WarungSeeder` dan malah membuat akun `test@example.com`. Sekarang hanya memanggil `WarungSeeder`.
@@ -56,20 +57,22 @@ Catatan: `routes/web.php` dari hari 5 dan 6 saling menggantikan. Gabungkan kedua
 - Menu nonaktif disembunyikan, bukan dihapus, supaya riwayat pesanan tetap utuh.
 - Ringkasan hanya menghitung pesanan website yang berstatus Selesai, dihitung dari tanggal di `riwayat_status`.
 - Budget: preferensi rasa hanya menyaring lauk dan paket. Hasil diurutkan dari yang paling mendekati budget. Satu paket atau lauk maksimal muncul 2 kali di 6 pilihan.
-- Banner "belum dikonfirmasi mitra" tampil di Budget selama `aturan_kombinasi.dikonfirmasi_mitra = false`.
+- Banner "data contoh" tampil di Budget selama `aturan_kombinasi.dikonfirmasi_mitra = false`. Kolomnya tetap ada, hanya teks banner yang diubah.
+- Penilaian atau konfirmasi oleh mitra (pemilik warung) dibatalkan oleh dosen (23 November 2026). Menu, harga, alamat, kontak, dan aturan kombinasi tetap data contoh dari `WarungSeeder`, dan ditandai sebagai data contoh di tampilan.
 - Kode Budget memakai `Route::get('/budget')`. Nilai `budget` yang kosong dibaca dari keberadaan parameter, bukan nilainya.
 
-## Hal yang menunggu mitra
+## Data contoh (tidak lagi menunggu mitra)
 
-Nama resmi, alamat, kontak, menu dan harga asli, apakah harga lauk sudah termasuk nasi, aturan kombinasi Budget, cara bayar selain saat ambil, apakah nomor telepon wajib, dan label rasa yang boleh tampil.
+Karena konfirmasi mitra dibatalkan, hal berikut tetap memakai data contoh: nama resmi, alamat, kontak, menu dan harga, apakah harga lauk sudah termasuk nasi, aturan kombinasi Budget, dan label rasa. Cara bayar tetap hanya saat ambil.
 
-## Langkah berikutnya (urutan)
+## Langkah berikutnya (hari 12 sampai 14)
 
-1. Jalankan `composer install`, `php artisan migrate:fresh --seed`, lalu `php artisan test`. Perbaiki galat dari hari 5 dan 6 sampai hijau.
-2. Uji manual dari awal sampai akhir: Menu, lalu Budget, lalu Masukkan ke Keranjang, lalu Checkout, lalu Kirim, lalu terima di admin, lalu Selesai, lalu cek angka di Ringkasan.
-3. Uji nilai batas dari PRD bagian 14 dan `PEMBAGIAN_TUGAS.md` (hari 12-14): item termurah habis, dua tab admin yang mengubah status yang sama, tombol kirim ditekan dua kali, akses admin tanpa login, dan layar 360px.
-4. Ganti kata sandi akun contoh sebelum demo.
-5. Perbarui "Status pengerjaan" di `CLAUDE.md`.
+Sudah selesai: tes otomatis untuk nilai batas Budget, status loncat tahap, dua tab admin, tombol kirim dua kali, dan akses admin tanpa login. Alur penuh sudah dicoba di browser.
+
+1. Cek tampilan di lebar 360px dan di ponsel sungguhan, lalu perbaiki yang berantakan.
+2. Perbaiki bug yang ditemukan saat uji.
+3. Ganti kata sandi akun contoh `admin@warung.test` sebelum demo.
+4. Siapkan demo atau deploy. Untuk server: `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL` yang benar, dan `APP_KEY` baru.
 
 ## Hal yang tidak boleh dilakukan
 

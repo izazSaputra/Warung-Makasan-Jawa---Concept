@@ -8,7 +8,7 @@
     <div class="admin__kepala admin__kepala--baris">
         <div>
             <h1>Kelola Menu</h1>
-            <p class="muted">Semua menu di bawah ini masih data contoh sampai mitra mengonfirmasi menu dan harga asli.</p>
+            <p class="muted">Menu awal di bawah ini adalah data contoh. Ubah sesuai menu dan harga sebenarnya bila perlu.</p>
         </div>
         <a href="{{ route('admin.menu.buat') }}" class="btn btn--utama">+ Tambah Menu</a>
     </div>

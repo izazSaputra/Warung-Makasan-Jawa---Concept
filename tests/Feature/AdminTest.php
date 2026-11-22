@@ -7,6 +7,7 @@ use App\Models\ItemMenu;
 use App\Models\PengaturanWarung;
 use App\Models\Pesanan;
 use App\Models\User;
+use Carbon\Carbon;
 use Database\Seeders\WarungSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -294,6 +295,18 @@ class AdminTest extends TestCase
         $this->assertSame('Nasi Putih', $hasil['item'][0]->nama);
         $this->assertSame(4, $hasil['item'][0]->jumlah); // 2 pesanan x 2 porsi
         $this->assertSame(2, $hasil['item'][1]->jumlah);
+    }
+
+    public function test_ringkasan_memakai_tanggal_wib(): void
+    {
+        // 01.00 WIB masih 18.00 UTC hari sebelumnya. Pesanan ini harus terhitung di tanggal WIB.
+        $this->travelTo(Carbon::parse('2026-11-24 01:00', 'Asia/Jakarta'));
+        $pesanan = $this->pesanan(StatusPesanan::Selesai, 'WMJ-WIB222');
+        $pesanan->riwayatStatus()->create(['status' => StatusPesanan::Selesai, 'waktu' => now()]);
+
+        $respon = $this->actingAs($this->admin)->get(route('admin.ringkasan', ['dari' => '2026-11-24', 'sampai' => '2026-11-24']));
+
+        $this->assertSame(1, $respon->viewData('hasil')['selesai']);
     }
 
     public function test_ringkasan_rentang_kosong_dan_tidak_valid(): void

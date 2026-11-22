@@ -25,7 +25,7 @@
     <form method="POST" action="{{ route('admin.pengaturan.perbarui') }}" class="form-kartu form-sempit">
         @csrf @method('PUT')
         <h2>Info warung</h2>
-        <p class="muted">Tampil di beranda dan footer. Nama resmi, alamat, dan kontak masih menunggu konfirmasi mitra.</p>
+        <p class="muted">Tampil di beranda dan footer. Nama, alamat, dan kontak awal adalah data contoh.</p>
 
         <div class="form-grup">
             <label for="nama_resmi">Nama warung</label>

@@ -70,7 +70,7 @@
         <section class="hasil-bagian" aria-label="Hasil pencarian" aria-live="polite">
             @if ($hasil['belum_dikonfirmasi'])
                 <div class="notif notif--peringatan" role="note">
-                    Susunan kombinasi dan menu di sini masih contoh dan belum dikonfirmasi warung. Hasil bisa berubah setelah menu dan harga resmi ditetapkan.
+                    Kombinasi, menu, dan harga di halaman ini memakai data contoh, bukan menu dan harga resmi warung.
                 </div>
             @endif
 
